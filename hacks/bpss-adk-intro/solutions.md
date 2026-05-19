@@ -27,22 +27,22 @@ Welcome to the coach's guide for Introduction to Agents with ADK gHack (BPSS Edi
 
 This hack is split into two parts for the Vista BPSS conference.
 
-- **Part 1: Onsite** (~3.5 hours)
-  - Challenge 1: First Scan (~45 min)
-  - Challenge 2: Equipping the Scanner (~60 min)
-  - Challenge 3: Sticky Notes (~60 min)
+- **Part 1: Onsite** (~2 hours)
+  - Challenge 1: First Scan (~30 min)
+  - Challenge 2: Equipping the Scanner (~30 min)
+  - Challenge 3: Sticky Notes (~30 min)
   - Buffer time for questions and mini-lectures (~45 min)
 
-- **Part 2: Remote** (~3.5 hours)
-  - Challenge 4: Agent Symphony (~60 min)
-  - Challenge 5: MCP: Universal Tooling (~75 min)
+- **Part 2: Remote** (~3 hours)
+  - Challenge 4: Agent Symphony (~45 min)
+  - Challenge 5: MCP: Universal Tooling (~60 min)
   - Challenge 6: A2A: Remote Agent Power (~45 min)
-  - Buffer time for questions and troubleshooting (~30 min)
+  - Buffer time for questions and troubleshooting (use AI Builders Slack channel - ~30 min)
 
 ### Transition Notes for Coaches
 
 - At the end of Part 1, **ensure all teams have pushed their code to their GitHub fork**. This is critical — the Qwiklabs environment from Part 1 will expire, and their fork is the only way to preserve their work.
-- For Part 2, set up a Google Meet or Chat Space for remote coaching and Q&A.
+- For Part 2, use the AI Builders Slack Channel fir remote coaching and Q&A.
 - At the start of Part 2, students will start a **new Qwiklabs lab** (same lab definition) to get a fresh GCP environment with all infrastructure re-provisioned. They then clone their fork and set up the environment again.
 
 ## Coach Prerequisites
@@ -107,7 +107,7 @@ Required Google Cloud resources:
 
 The first step is to fork and clone the repository from GitHub.
 
-Students should navigate to [https://github.com/dstampfli/gcp-adk-intro-agent](https://github.com/dstampfli/gcp-adk-intro-agent) and click "Fork" to create their own copy. Then clone their fork:
+Students should navigate to [https://github.com/vct-ai-recipes/gcp-adk-intro-agent](https://github.com/vct-ai-recipes/gcp-adk-intro-agent) and click "Fork" to create their own copy. Then clone their fork:
 
 ```shell
 git clone https://github.com/<their-github-username>/gcp-adk-intro-agent.git

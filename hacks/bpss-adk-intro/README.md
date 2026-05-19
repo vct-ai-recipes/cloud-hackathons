@@ -67,7 +67,7 @@ We're taking baby steps, let's get started with our development environment. Thi
 
 We've already prepared a code base for you in a public GitHub repository. First, fork the repository to your own GitHub account, then clone your fork on Cloud Shell, create a virtual environment and install the requirements.
 
-- Fork the repository: [https://github.com/dstampfli/gcp-adk-intro-agent](https://github.com/dstampfli/gcp-adk-intro-agent)
+- Fork the repository: [https://github.com/vct-ai-recipes/gcp-adk-intro-agent](https://github.com/vct-ai-recipes/gcp-adk-intro-agent)
 - Clone your fork:
 
 ```shell
