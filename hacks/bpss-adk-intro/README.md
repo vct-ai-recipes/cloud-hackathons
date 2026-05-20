@@ -6,7 +6,7 @@ Welcome to DevCore Inc.! We are a fast-moving tech company where innovation thri
 
 This results in hundreds of idle resources running 24/7, costing the company tens of thousands of dollars every month for zero value. The manual cleanup process is tedious, error-prone, and can't keep up. We need an automated, intelligent system to solve this problem.
 
-Our objective is to build a *Cloud Janitor* an AI-powered agentic solution that can automatically identify, verify, and safely terminate unused cloud resources.
+Our objective is to build a *Cloud Janitor* — an AI-powered agentic solution that can automatically identify, verify, and safely terminate unused cloud resources.
 
 ![Overview of Agents and Tools](./images/agents-and-tools.png)
 
@@ -41,18 +41,35 @@ This hack will help you explore the following tasks:
 
 ## Prerequisites
 
-- Basic knowledge of GCP
 - Basic knowledge of Python
 - A GitHub account
-- Access to a GCP environment
 
 > [!NOTE]
-> In principle you could do the challenges in any environment, but we recommend Cloud Shell as it comes with most of the required tooling.
+> A GCP environment will be provided to you for this hack, and GCP experts will be on hand throughout the event to answer any questions. In principle you could do the challenges in any environment, but we recommend Cloud Shell as it comes with most of the required tooling.
 
 ## Contributors
 
 - Murat Eken
-- Daniel Stampfli
+- David Stampfli
+
+## Before You Begin
+
+You'll be working in a Qwiklabs-provisioned Google Cloud project — the Cloud infrastructure (test VMs, MCP server, A2A server) has already been deployed for you. Before starting Challenge 1, take a moment to confirm your environment.
+
+1. Open Cloud Shell from the Google Cloud Console and verify your active project matches the one assigned by your Qwiklabs lab:
+
+    ```shell
+    gcloud config get-value project
+    ```
+
+2. If it doesn't match, set it explicitly:
+
+    ```shell
+    gcloud config set project <your-project-id>
+    ```
+
+> [!TIP]
+> Need help during the hack? Drop a question in the **AI Builders Slack channel** — GCP experts will be available throughout the event to help.
 
 ## Challenge 1: First Scan
 
@@ -61,20 +78,49 @@ This hack will help you explore the following tasks:
 We're taking baby steps, let's get started with our development environment. This challenge is all about getting the quintessential *Agent* to work so that we can start building it further.
 
 > [!NOTE]
-> You could run this (and the remaining challenges) from any VM, but we recommend you to use Cloud Shell as it comes with most of the prerequisites pre-installed.
+> You could run this (and the remaining challenges) from any VM, but we recommend using Cloud Shell as it comes with most of the prerequisites pre-installed.
 
 ### Description
 
-We've already prepared a code base for you in a public GitHub repository. First, fork the repository to your own GitHub account, then clone your fork on Cloud Shell, create a virtual environment and install the requirements.
+We've already prepared a code base for you in a public GitHub repository. First, fork the repository to your own GitHub account, then clone your fork on Cloud Shell, create a virtual environment, install the requirements, and configure authentication.
 
-- Fork the repository: [https://github.com/vct-ai-recipes/gcp-adk-intro-agent](https://github.com/vct-ai-recipes/gcp-adk-intro-agent)
-- Clone your fork:
+1. Fork the repository: [https://github.com/vct-ai-recipes/gcp-adk-intro-agent](https://github.com/vct-ai-recipes/gcp-adk-intro-agent)
 
-```shell
-git clone https://github.com/<your-github-username>/gcp-adk-intro-agent.git
-```
+2. Clone your fork and change into the project directory:
 
-Once everything is set up, run `adk web` and make sure that the agent responds back.
+    ```shell
+    git clone https://github.com/<your-github-username>/gcp-adk-intro-agent.git
+    cd gcp-adk-intro-agent
+    ```
+
+3. Create and activate a virtual environment, then install dependencies:
+
+    ```shell
+    python3 -m venv .venv
+    source .venv/bin/activate
+    pip install -r requirements.txt
+    ```
+
+4. Configure ADK to authenticate against Vertex AI by creating `janitor/.env`:
+
+    ```shell
+    REGION=us-central1
+    cat > janitor/.env <<EOF
+    GOOGLE_GENAI_USE_VERTEXAI=TRUE
+    GOOGLE_CLOUD_PROJECT=$(gcloud config get-value project)
+    GOOGLE_CLOUD_LOCATION=$REGION
+    EOF
+    ```
+
+5. Launch the ADK web UI:
+
+    ```shell
+    adk web
+    ```
+
+    `adk web` serves on port `8000` by default. In Cloud Shell, click the **Web Preview** icon (top right), choose **Change port**, enter `8000`, and preview.
+
+6. Greet the agent from the ADK web UI and verify it responds without errors.
 
 ### Success Criteria
 
@@ -89,10 +135,6 @@ Once everything is set up, run `adk web` and make sure that the agent responds b
 - [Cloud Shell Editor](https://cloud.google.com/shell/docs/launching-cloud-shell-editor)
 - [Previewing web apps](https://cloud.google.com/shell/docs/using-web-preview)
 - [Setting up authentication for ADK](https://google.github.io/adk-docs/get-started/quickstart/#gemini---google-cloud-vertex-ai)
-
-### Tips
-
-- Easiest option for ADK authentication is to use a properly configured `.env` file.
 
 ## Challenge 2: Equipping the Scanner
 
@@ -115,9 +157,9 @@ The provided code base already has a function that can look up the resources run
 - The Agent lists the following Virtual Machines when it's asked to list all resources:
 
   ```text
-  - gce-sbx-lnx-blob-001
-  - gce-dev-lnx-tomcat-001
-  - gce-dev-lnx-tomcat-002
+  - gce-sbx-lnx-blob-01
+  - gce-dev-lnx-tomcat-01
+  - gce-dev-lnx-tomcat-02
   - gce-prd-lnx-env-setup
   ```
 
@@ -160,6 +202,25 @@ Modify the `resource_scanner_agent` to save the list of all virtual machines in 
 
 - You can use `adk web` UI to inspect the session state (and to verify that everything works as expected).
 
+---
+
+## Part 2: Remote
+
+> [!IMPORTANT]
+> **Resuming for Part 2?** You'll be starting in a **fresh Qwiklabs lab** with a new project ID. Your code is preserved in your GitHub fork from Part 1 — pick up by:
+>
+> 1. Open Cloud Shell in the new project and re-clone *your fork* (not the upstream):
+>
+>     ```shell
+>     git clone https://github.com/<your-github-username>/gcp-adk-intro-agent.git
+>     cd gcp-adk-intro-agent
+>     python3 -m venv .venv && source .venv/bin/activate
+>     pip install -r requirements.txt
+>     ```
+>
+> 2. Recreate `janitor/.env` for the new project (see Challenge 1, step 4).
+> 3. The Cloud Run `mcp-server` and `a2a-server` URLs will be different in the new project — see Challenges 5 and 6 for how to discover them.
+
 ## Challenge 4: Agent Symphony
 
 ### Introduction
@@ -183,17 +244,17 @@ Then create a new sequential agent `orchestrator_agent` that calls the `resource
 ### Success Criteria
 
 - The Agent runs both `resource_scanner_agent` and `resource_monitor_agent` in sequence and updates the session store.
-- The session state contains `gce-dev-lnx-tomcat-001`,  `gce-dev-lnx-tomcat-002` and `gce-sbx-lnx-blob-001` (and their details) for `idle_resources` using the correct schema when prompted to find the idle resources.
+- The session state contains `gce-dev-lnx-tomcat-01`, `gce-dev-lnx-tomcat-02` and `gce-sbx-lnx-blob-01` (and their details) for `idle_resources` using the correct schema when prompted to find the idle resources.
 - The changes have been pushed to your GitHub fork.
 
 ### Learning Resources
 
 - [Multi-Agent Systems in ADK](https://google.github.io/adk-docs/agents/multi-agents/)
-- If idle resource list is not generated correctly, make your instructions more specific
 
 ### Tips
 
 - You can use `adk web` UI to view the agents involved.
+- If the idle resource list is not generated correctly, make your agent instructions more specific.
 
 ## Challenge 5: MCP: Universal Tooling
 
@@ -207,17 +268,24 @@ In this challenge we'll make sure that idle resources are tagged so that we can 
 
 ### Description
 
-We have already provided a service called `mcp-server` on Cloud Run. It provides a number of tools that are basically responsible for managing the labels on resources.
+We have already provided a service called `mcp-server` on Cloud Run. It provides a number of tools that are basically responsible for managing the labels on resources. You can discover its URL with:
+
+```shell
+gcloud run services describe mcp-server --region=us-central1 --format='value(status.url)'
+```
 
 Create a new agent `resource_labeler_agent`, configure it to use the toolset from that server. Instruct the agent to add the `janitor-scheduled` label with the value set to 7 days in the future to the idle instances. Make sure that the agent does not add the label if the instance already has a `janitor-scheduled` label.
 
 Then add the `resource_labeler_agent` to the `orchestrator_agent` sequence.
 
+> [!NOTE]
+> One of the test VMs (`gce-sbx-lnx-blob-01`) has been pre-labeled with `janitor-scheduled` set to yesterday's date. Your labeler agent should leave this one alone, while adding 7-day-future labels to the tomcat VMs. This pre-labeled VM is the termination target you'll act on in Challenge 6.
+
 ### Success Criteria
 
 - The Agent runs `resource_scanner_agent`, `resource_monitor_agent` and `resource_labeler_agent` in sequence.
-- The instances `gce-dev-lnx-tomcat-001`,  `gce-dev-lnx-tomcat-002` have the label `janitor-scheduled` with the value set to 7 days in the future.
-- The instance `gce-sbx-lnx-blob-001` is not updated and keeps `janitor-scheduled` label set to yesterday.
+- The instances `gce-dev-lnx-tomcat-01` and `gce-dev-lnx-tomcat-02` have the label `janitor-scheduled` with the value set to 7 days in the future.
+- The instance `gce-sbx-lnx-blob-01` is not updated and keeps `janitor-scheduled` label set to yesterday.
 - The changes have been pushed to your GitHub fork.
 
 ### Learning Resources
@@ -239,17 +307,21 @@ In the previous challenge we've learned that we can use tools developed by other
 
 ### Description
 
-We have already provided a service called `a2a-server` on Cloud Run. It has a single agent deployed that's responsible for stopping the idle resources that have been marked with the `janitor-scheduled` label.
+We have already provided a service called `a2a-server` on Cloud Run. It has a single agent deployed that's responsible for stopping the idle resources that have been marked with the `janitor-scheduled` label. You can discover its URL with:
 
-Create a new agent `resource_cleaner_agent` that uses A2A protocol to connect to the remote `a2a-server` and add it to the `orchestrator_agent` sequence as the last one.
+```shell
+gcloud run services describe a2a-server --region=us-central1 --format='value(status.url)'
+```
+
+Create a new agent `resource_cleaner_agent` that uses A2A protocol to connect to the remote `a2a-server`, and add it to the `orchestrator_agent` sequence as the final step.
 
 ### Success Criteria
 
 - The Agent runs all the agents in sequence and stops all the idle resources that have been marked with the `janitor-scheduled` label where the date is in the past, leaving only the following running:
 
   ```text
-  - gce-dev-lnx-tomcat-001
-  - gce-dev-lnx-tomcat-002
+  - gce-dev-lnx-tomcat-01
+  - gce-dev-lnx-tomcat-02
   - gce-prd-lnx-env-setup
   ```
 
