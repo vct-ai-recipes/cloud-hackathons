@@ -69,7 +69,7 @@ You'll be working in a Qwiklabs-provisioned Google Cloud project — the Cloud i
     ```
 
 > [!TIP]
-> Need help during the hack? Drop a question in the **AI Builders Slack channel** — GCP experts will be available throughout the event to help.
+> Need help during the hack? During the onsite part, just ask one of the available coaches. During the remote part, drop a question in the **AI Builders Slack channel**.
 
 ## Challenge 1: First Scan
 
