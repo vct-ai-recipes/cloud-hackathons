@@ -36,8 +36,8 @@ This hack will help you explore the following tasks:
 - Challenge 6: A2A: Remote Agent Power
 
 > [!NOTE]
-> - **Part 1 (onsite, ~3.5 hours):** Challenges 1-3 cover ADK fundamentals — setup, tools, and session state.
-> - **Part 2 (remote, ~3.5 hours):** Challenges 4-6 cover advanced topics — multi-agent orchestration, MCP, and A2A protocols.
+> - **Part 1 (onsite, ~2 hours):** Challenges 1-3 cover ADK fundamentals — setup, tools, and session state.
+> - **Part 2 (remote, ~3 hours):** Challenges 4-6 cover advanced topics — multi-agent orchestration, MCP, and A2A protocols.
 
 ## Prerequisites
 
