@@ -202,12 +202,10 @@ Modify the `resource_scanner_agent` to save the list of all virtual machines in 
 
 - You can use `adk web` UI to inspect the session state (and to verify that everything works as expected).
 
----
-
-## Part 2: Remote
+## Challenge 4: Agent Symphony
 
 > [!IMPORTANT]
-> **Resuming for Part 2?** You'll be starting in a **fresh Qwiklabs lab** with a new project ID. Your code is preserved in your GitHub fork from Part 1 — pick up by:
+> **Welcome to Part 2 (Remote).** You'll be starting in a **fresh Qwiklabs lab** with a new project ID. Your code is preserved in your GitHub fork from Part 1 — pick up by:
 >
 > 1. Open Cloud Shell in the new project and re-clone *your fork* (not the upstream):
 >
@@ -220,8 +218,6 @@ Modify the `resource_scanner_agent` to save the list of all virtual machines in 
 >
 > 2. Recreate `janitor/.env` for the new project (see Challenge 1, step 4).
 > 3. The Cloud Run `mcp-server` and `a2a-server` URLs will be different in the new project — see Challenges 5 and 6 for how to discover them.
-
-## Challenge 4: Agent Symphony
 
 ### Introduction
 
