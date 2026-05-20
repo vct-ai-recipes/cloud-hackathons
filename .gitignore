@@ -30,3 +30,5 @@ node_modules/
 .terraform*
 terraform.tfstate*
 terraform.tfvars*
+tfplan
+*.tfplan
